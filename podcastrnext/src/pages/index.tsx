@@ -1,6 +1,7 @@
+import Header from '../components/Header/index'
 
 export default function Home() {
   return (
-    <h1>Coe Galesssra</h1>
+    <Header />
   )
 }
