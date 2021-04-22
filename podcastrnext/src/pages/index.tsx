@@ -1,12 +1,19 @@
-// SSR
-// SSG
+import { GetStaticProps } from 'next';
+import { format, parseISO } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
+import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
+import { api } from '../components/services/api';
 
-import {GetStaticProps} from 'next';
 
 type Episode = {
-  id: string;
-  title: string;
-  members: string
+  id: string,
+  title: string,
+  thumbnail: string,
+  publishedAt: string,
+  duration: number,
+  durationAsString: string,
+  description: string,
+  url: string,
 }
 
 type HomeProps = {
@@ -25,13 +32,31 @@ export default function Home(props: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () =>{
   
-      const response = await fetch('http://localhost:3333/episodes?_limit=12&_sort=published_at&_order=desc');
-      const data = await response.json();
+      const { data } = await api.get('episodes',{
+        params: { 
+          _limit: 12,
+          _sort: 'publish_at',
+          _order: 'desc'
+        }
+      });
+
+      const episodes = data.map( episode => {
+        return {
+          id: episode.id,
+          title: episode.title,
+          thumbnail: episode.thumbnail, 
+          publishedAt: format(parseISO(episode.published_at), 'd MM yy', {locale: ptBR} ),
+          duration: Number(episode.file.duration),
+          durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+          description: episode.description,
+          url: episode.file.url
+        }
+      })
     
       return {
         props: {
-          episodes: data 
-        },
+          episodes: episodes 
+        }, 
         revalidate: 60*60*8,
       } 
 }
