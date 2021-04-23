@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router'
 import { api } from '../../components/services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
@@ -27,13 +27,21 @@ export default function Episodes ({ episode }: EpisodeProps) {
     )
 }
 
+export const getStaticPaths: GetStaticPaths = async () => { 
+    
+    return{
+        paths:[],
+        fallback: 'blocking',
+    }
+}
+
 
 export const getStaticProps: GetStaticProps = async (context) => {
 
     const { episodeName } = context.params; 
     const { data } = await api.get(`/episodes/${episodeName}`)
 
-    console.log(episodeName)
+   // console.log(episodeName)
 
     const episode =  {
         id: data.id,
