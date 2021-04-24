@@ -82,7 +82,7 @@ export default function Home({latestEpisodes, allEpisodes}: HomeProps) {
               
               return(
 
-                <tr>
+                <tr key={episode.id}>
                   <td style={{width: 72}}>
                     <Image 
                       width={120} 
