@@ -24,6 +24,12 @@ type EpisodeProps = {
 }
 
 export default function Episodes ({ episode }: EpisodeProps) {
+
+    const router = useRouter();
+
+    if(router.isFallback){
+        <p>carregando...</p>
+    }
         
     return(
         <div className={styles.episode}>
@@ -64,10 +70,46 @@ export default function Episodes ({ episode }: EpisodeProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => { 
     
+    const { data } = await api.get('episodes',{
+        params: { 
+          _limit: 2,
+          _sort: 'publish_at',
+          _order: 'desc'
+        }
+    });
+
+    const paths = data.map(episode => {
+        return {
+            params:{
+                episodeName: episode.id
+            }
+        }
+    })
+
+
     return{
-        paths:[],
-        fallback: 'blocking',
+        paths,
+        fallback: 'blocking', // melhor opção para SEO
     }
+
+
+
+
+    /**
+     * metodo obrigatório de ser utilizado em toda rota que tá usando geração estática
+     * e que tem parâmetros dinamoicos - tem colchetes no nome do arquivo
+     * na hora da build o next não tem noção das páginas devem ser formadas já que 
+     * elas são geradas de forma dinâmica
+     * 
+     * getStaticPaths vai pegar as páginas que que acessamos de forma dinâmica e 
+     * transform-la em páginas estáticas 
+     * 
+     * client (borwser) - nesxtjs (node) - server (bcak-end)
+     * 
+     * Gerção de página estática ocorre na hora d abuild
+     * 
+     * Tipos de fallback, true, false, blocking
+     */
 }
 
 
@@ -100,3 +142,16 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 
 // episodeName - está entre [] no nome do arquivo
+
+/**
+ * 
+ * getStaticPaths
+ * é uma função importante pois permite a geração de páginas estáticas
+ * que são acessadas de forma dinâmica
+ * 
+ * A Geração da página estática ocorre em dis momentos principais:
+ *  - Buildo do progeto (olhando o argumento params)
+ *  - quando algum usuário acessa a página diNãmica (fallback: blocking) 
+ *  ----- incrmental static generation - geração de páginas estáticas dinmicas
+ * 
+ */
