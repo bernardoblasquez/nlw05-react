@@ -5,6 +5,8 @@ import Link from 'next/link'
 import ptBR from 'date-fns/locale/pt-BR';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 import { api } from '../components/services/api';
+import { PlayerContext } from '../contexts/PlayerContext'
+import { useContext } from 'react' 
 import styles from './home.module.scss';
 
 
@@ -26,10 +28,12 @@ type HomeProps = {
 
 export default function Home({latestEpisodes, allEpisodes}: HomeProps) {
   
+  const player = useContext(PlayerContext)
+
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
-        <h2>Últimos Lançamentos</h2>
+        <h2>Últimos Lançamentos {player}</h2>
         <ul>
 
           { 
