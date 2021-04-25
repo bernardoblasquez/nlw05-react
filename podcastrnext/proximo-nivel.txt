@@ -1,0 +1,4 @@
+Fazer a aplicação ser responsivas
+Criar uma versão PWA - next pwa - progressive webapps
+fazer o tema dark - seguir as cores do Omni da rocketseat
+jogar dentro do electron
