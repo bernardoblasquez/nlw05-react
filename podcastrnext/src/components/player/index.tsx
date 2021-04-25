@@ -4,13 +4,15 @@ import { useContext } from 'react'
 
 const Player = () => {
 
-  const player = useContext(PlayerContext);
+  const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+
+  const episode = episodeList[currentEpisodeIndex];
 
   return (
     <div className={styles.playerContainer}>
       <header>
         <img src="/playing.svg" alt="" />
-        <strong>Tocando Agora {player}</strong>
+        <strong>Tocando Agora {episode?.title}</strong>
       </header>
 
       <div className={styles.emptyPlayer}>
