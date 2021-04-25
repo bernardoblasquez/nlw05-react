@@ -3,10 +3,12 @@ import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import styles from './episode.module.scss'
 import { api } from '../../components/services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
+import { usePlayer } from '../../contexts/PlayerContext'
+
+
 
 type Episode = {
     id: string;
@@ -17,6 +19,7 @@ type Episode = {
     durationAsString: string;
     publishedAt: string;
     description: string;
+    url:string;
   }
   
 type EpisodeProps = {
@@ -25,11 +28,7 @@ type EpisodeProps = {
 
 export default function Episodes ({ episode }: EpisodeProps) {
 
-    const router = useRouter();
-
-    if(router.isFallback){
-        <p>carregando...</p>
-    }
+    const { play } = usePlayer()
         
     return(
         <div className={styles.episode}>
@@ -47,7 +46,7 @@ export default function Episodes ({ episode }: EpisodeProps) {
                     alt={episode.title}
                     objectFit='cover'/>
 
-                <button type="button">
+                <button type="button" onClick={() =>{ play(episode) } }>
                     <img src="/play.svg" alt="Tocar episódio"/>
                 </button>
             </div>
@@ -127,8 +126,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
         duration: Number(data.file.duration),
         durationAsString: convertDurationToTimeString(Number(data.file.duration)),
         description: data.description,
+        url: data.file.url,
     }
 
+    
     return{
         props:{
             episode,
