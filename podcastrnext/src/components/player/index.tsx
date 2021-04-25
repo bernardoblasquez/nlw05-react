@@ -123,7 +123,10 @@ const Player = () => {
             onClick={playNext} >
             <img src="./play-next.svg" alt="Tocar Próxima" />
           </button>
-          <button type="button" disabled={!episode} onClick={toggleLoop}>
+          <button type="button" 
+            disabled={!episode} 
+            onClick={toggleLoop}
+            className={isLooping ? styles.isActive : ''}>
             <img src="./repeat.svg" alt="Repetir" />
           </button>
         </div>
