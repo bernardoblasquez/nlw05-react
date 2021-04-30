@@ -16,3 +16,6 @@ Static site generation (SSG)
 - yarn
 - nextJS - npx create-nexr-app
 
+# Primeiro Dia
+Apresentação dos principais conceitos relacionados ao react. 
+- SPA, componentes, estados, SSG, SSG...
