@@ -15,7 +15,10 @@ Instalação do nextJS e apresentação dos principais conceitos relacionados ao
 Desenvolvimento dos dois primeiros componentes da aplicação: header e da parte visual do player. Instalação dos pacotes para desenvolvimento (typescript, sass e date-fns) e instalação e configuração do JSON-server. No final do dia foi apresentado como gerar com SSG e SSR utilizando o next.
 
 # Terceiro Dia
-Finalização da home da aplicação (design) e inicio do desenvolvimento da página de episódios. Dica: sempre deixar os dados já formatados, na forma como seram utilizados. Fazer isso antes do consumo desses dados pelo componente. Outro elemento visto prevemente foi a geração de págias estaticas dinâmicas 
+Finalização da home da aplicação (design) e inicio do desenvolvimento da página de episódios. Dica: sempre deixar os dados já formatados, na forma como seram utilizados. Fazer isso antes do consumo desses dados pelo componente. Outro assunto visto brevemente foi a geração de págias estaticas dinâmicas (comando 'yarn build' do next)
+
+# Quarto dia 
+Explicação mais aprofundada de geração de páginas estáticas dinâmicas (GetStaticPaths) e uso co context API do nextJS, responsável pelo compartilhamento de informações entre componentes. Desenvolvimento da funcionalidade de play e pause do player.
 
 # Pacotes utilizadons no NLW e sua instalação
 - build do projeto em NEXT
